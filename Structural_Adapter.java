@@ -24,7 +24,7 @@
  	}
  }
  
-// 适配器
+// 适配器，继承源角色并实现目标接口
  public class Adater extends Adatee implements Target {
  	public void request(){
  		super.doSomething();
