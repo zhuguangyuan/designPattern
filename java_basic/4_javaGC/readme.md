@@ -1,0 +1,21 @@
+# java内存回收
+- JVM的垃圾回收机制采用有向图方式来管理内存中的对象。
+	- java对象的状态
+		- 可达状态
+		- 可恢复状态
+			- 调用finalize方法进行资源清理，若再有引用指向本对象，则恢复可达状态OB
+		- 不可达状态
+			- 调用finalize也不能挽救，回收！
+- java.lang.ref
+	- 强引用(StrongReference)
+		- 内存不足也不会回收，所以会导致内存泄漏甚至程序中止
+	- 软引用(SoftReference) 
+		- 内存不足时才会回收，内存充足时相当于强引用
+	- 弱引用(WeakReference) 
+		- JVM运行回收代码时会回收。
+		- 参考 WeakHashMapTest.java
+	- 虚引用(PhantomReference) 
+		- 跟踪对象被垃圾回收的状态
+		- java.lang.ref.ReferenceQueue 用于保存被回收后的对象的引用
+- java内存泄漏
+	- 
