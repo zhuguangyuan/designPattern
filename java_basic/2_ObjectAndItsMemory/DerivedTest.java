@@ -72,6 +72,23 @@ class Wolf extends Animal2 {
     }
 }
 
+// =====================================================
+// @Descrition:  测试父类私有函数无覆写概念，因为对子类不可见，
+// 子类中的同名同参方法只能算是新方法
+// =====================================================
+class A {
+    // private只在本类内可见，子类并不可见
+    // 所以子类出现的同名同参方法只能算是新方法
+    // 对此方法JVM不会动态绑定
+    private void print(){
+        System.out.print("A");
+    }
+}
+class B extends A {
+    public void print(){
+        System.out.print("B");
+    }
+}
 
 public class DerivedTest {
     public static void main(String[] args) {
@@ -105,6 +122,41 @@ public class DerivedTest {
          */
         // 结论：不要在父类构造器中调用会被子类重写的方法A
         // 否则此被重写的方法A会在子类的初始化块及构造函数之前被执行，导致A中若用到相关变量，则是未经正确初始化的
+
+
+        //动态绑定的前提是这个方法不是private，final，static的，
+        //在main方法里，声明了一个父类变量，虽然引用了一个子类对象，
+        // 编译器会在声明的类型，也就是父类中寻找方法，发现这个方法是private的，
+        // 就会直接调用，而不会动态绑定
+        A a = new A();
+        a.print();
+
+        B b = new B();
+        b.print();
+
+        A a2 = new B();
+        a2.print();//注意这里不会动态绑定，打印的是A
+
+        // 测试局部变量脱离它所在方法继续存在的例子
+        final String str = "java";
+        new Thread(
+            // 局部内部类，实现Runable接口
+            new Runable(){
+                public void run() {
+                    for (int i=0; i<100; i++) {
+                        // 只要线程没有运行停止，将一直可以访问str变量
+                        // 如果str不为final变量，则脱离main方法后将变得不可预知，从而造成混乱。
+                        System.out.prinln(str + "_" + i);
+                        try{
+                            Thread.sleep(100);
+                        }catch(Exception e){
+                            e.printStackTrace();
+                        }
+                    }
+                }
+
+            }
+        ).start();
     }
 }
 
