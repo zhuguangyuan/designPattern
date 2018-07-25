@@ -29,4 +29,19 @@
 	- 在严格的泛型程序中，使用泛型声明的类时应该总是为之指定类型实参，但是为了和老java代码保持一致，java也允许使用带泛型声明的类时不指定类型参数。如果不指定参数，那个这个类型参数默认是声明该参数时指定的第一个上限类型，这个类型就称为原始类型。
 	- 原始类型变量的赋值
 	- 原始类型的泛型擦除
-	- 
+	- 不能创建范型数组
+- 正则表达式陷阱
+	- String.split(String regex),参数是正则表达式
+	- 正则表达式的(.)匹配任意字符
+	- 区分两个方法的传入参数不同 
+		- replace(CharSequence target,CharSequence replacement)
+		- replaceAll(String regex,String replacement)
+		- 例子
+			- "brucezhu.27".replace(".","\\")
+			- "brucezhu.27".replaceAll("\\.","\\\\")，其中\\用于生成转义的反斜线
+- 多线程的陷阱
+	- 从java5开始，提供三种方式创建启动多线程
+		- 继承Thread类来创建线程类，重写run()方法作为线程执行体
+		- 实现Runable接口来创建线程类，重写run()方法作为线程执行体
+		- 实现Callable接口来创建线程类，重写call()方法作为线程执行体
+		
