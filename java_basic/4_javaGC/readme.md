@@ -64,10 +64,17 @@
 
 - 内存管理小技巧
 	- 尽量使用直接量
+		- String str = "Hello";而不是 String str = new String("Hello");
 	- 使用StringBuilder和StringBuffer进行字符串连接
+		- StringBuilder stringBuilder = new StringBuider().append("brucezhu").append("hello!");
+		- StringBuffer线程安全，StringBuilder线程不安全。
 	- 尽早释放无用对象的引用
+		- 局部变量一般在其作用域结束之后生命周期就结束了，一般不用手动置为空。但是之后如果执行耗费内存的操作，也可手动将引用置空
 	- 尽量少用静态变量
+		- static Object obj = new Object();
+		- obj会保存在方法区里，直至其所在类被卸载或者程序运行结束。它引用的对象保存在堆区中，将一直得不到回收。
 	- 避免在经常调用的方法、循环中创建java对象
 	- 缓存经常使用的对象
 	- 尽量不要使用finalize方法
+		- 垃圾回收器本身就影响程序的运行性能，如果在finalize()方法中用户书写了进行资源清理的代码，则垃圾回收之时还要执行这一部分代码，从而更影响性能。可以考虑在其他地方释放资源。
 	- 考虑使用SoftReference
