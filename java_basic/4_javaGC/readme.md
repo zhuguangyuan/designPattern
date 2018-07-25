@@ -67,7 +67,7 @@
 		- String str = "Hello";而不是 String str = new String("Hello");
 	- 使用StringBuilder和StringBuffer进行字符串连接
 		- StringBuilder stringBuilder = new StringBuider().append("brucezhu").append("hello!");
-		- StringBuffer线程安全，StringBuilder线程不安全。
+		- StringBuffer类中的大多数方法都增加了synchronized修饰符保证线程安全，但是会降低该方法的执行效率。StringBuilder线程不安全，单线程情况下优先使用此类。
 	- 尽早释放无用对象的引用
 		- 局部变量一般在其作用域结束之后生命周期就结束了，一般不用手动置为空。但是之后如果执行耗费内存的操作，也可手动将引用置空
 	- 尽量少用静态变量
